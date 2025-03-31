@@ -1,0 +1,19 @@
+-> 	A letter entered/clicked, is shown in the next available tile.
+-> 	Once all letters in the current row are entered, cannot enter any more letters. 
+	Only "Enter" and "Backspace" are allowed.
+
+!m#%7CC,R&?@Up; - AWS Skill builder
+tv*5,bwQYhUv97k - Apple Jobs
+445BKhu3adcP$Tx - The Mom Project
+
+hqXMetArkT.uyk8 - Thomson Reuters
+
+8DJF6idnHr#r%/c - Pra LinkedIn
+
+!7ghWjr@gH8j724 - Horizontal Talent
+
+9YeFu-bTbE4FH.e - US Bank
+
+React, JavaScript, TypeScript, C#, .NET, CSS, HTML, Redux, Next.js, MongoDB, SQL, BootStrap, TailwindCSS, 
+
+https://www.linkedin.com/in/lakshmi-prasanthi-mantravadi-03887b8/

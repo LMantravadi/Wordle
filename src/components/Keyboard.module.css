@@ -1,0 +1,17 @@
+ /* Inline styles for layout */
+.keyboard  {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    gap: "6px";
+    background-color: rgb(224, 217, 217)
+  };
+  
+  .rowStyle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: "4px";
+  };
+  

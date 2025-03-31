@@ -1,0 +1,10 @@
+
+.line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    align-items: center;
+    vertical-align: middle;
+    border: "black 1px solid";
+    height: auto; /* Ensures it only takes necessary height */
+}
