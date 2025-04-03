@@ -12,9 +12,10 @@ import {
   LETTER_COUNT_IN_WORD,
   LETTER_STATUS,
   GAME_STATUS,
-} from "../constants/constants";
+} from "../constants/wordle-constants";
 
 interface WordleContextType {
+  targetWord: string;
   setTargetWord: Dispatch<SetStateAction<string>>;
   guessedWords: GuessedWordsProps;
   setGuessedWords: Dispatch<SetStateAction<GuessedWordsProps>>;
@@ -22,6 +23,7 @@ interface WordleContextType {
   handleLetterSelect: (letter: string) => void;
   gameStatus: GAME_STATUS | undefined;
 }
+
 // 1. Create a Context, set to initial state
 
 const WordleContext = createContext<WordleContextType | undefined>(undefined);
@@ -73,7 +75,7 @@ const WordleContextProvider = ({ children }: { children: ReactNode }) => {
 
       updatedWords[currentWordIndex].word.push({
         letter,
-        status: LETTER_STATUS.WRONG,
+        status: LETTER_STATUS.INITIAL,
       });
 
       return {
@@ -98,14 +100,61 @@ const WordleContextProvider = ({ children }: { children: ReactNode }) => {
     });
   }
 
+  function isDuplicateGuess() {
+    let isDuplicate = false;
+    const words = [...guessedWords.words];
+    const currentWordIndex = guessedWords.currentWordIndex;
+    const currentGuessWord = [...words[currentWordIndex].word]
+      .map((tile) => tile.letter)
+      .join("");
+
+    words.forEach(({ word: prevWord }, prevWordIndex) => {
+      if (currentWordIndex > prevWordIndex) {
+        const previousGuessWord = prevWord.reduce((a, c) => {
+          return a + c.letter;
+        }, "");
+
+        if (previousGuessWord !== "") {
+          if (
+            previousGuessWord.toLowerCase() === currentGuessWord.toLowerCase()
+          )
+            isDuplicate = true;
+        }
+      }
+    });
+
+    return isDuplicate;
+  }
+
   function handleWordSelect() {
     const currentWord = guessedWords.words[guessedWords.currentWordIndex].word;
-    if (currentWord.length < LETTER_COUNT_IN_WORD) {
-      setGameStatus(GAME_STATUS.INSUFFICIENT);
+
+    if (currentWord.length === 0) {
+      setGameStatus(GAME_STATUS.EMPTY);
+      resetGameStatusAfterWarning();
       return;
     }
+    if (currentWord.length < LETTER_COUNT_IN_WORD) {
+      setGameStatus(GAME_STATUS.INSUFFICIENT);
+      resetGameStatusAfterWarning();
+      return;
+    }
+    if (isDuplicateGuess()) {
+      setGameStatus(GAME_STATUS.DUPLICATE);
+      resetGameStatusAfterWarning();
+      return;
+    }
+    if (currentWord.length === LETTER_COUNT_IN_WORD)
+      setGameStatus(GAME_STATUS.IN_PROGRESS);
 
     checkForCorrectEntry();
+  }
+
+  //resets game status after current error is shown as user continues to guess
+  function resetGameStatusAfterWarning() {
+    setTimeout(() => {
+      setGameStatus(GAME_STATUS.IN_PROGRESS);
+    }, 3000);
   }
 
   function checkForCorrectEntry() {
@@ -127,8 +176,7 @@ const WordleContextProvider = ({ children }: { children: ReactNode }) => {
 
     updatedWordList[currentWordIndex] = { word: currentWord };
 
-    console.log(userWord, targetWord);
-    if (userWord.toLowerCase() === targetWord) {
+    if (userWord.toLowerCase() === targetWord.toLowerCase()) {
       setGameStatus(GAME_STATUS.SUCCESS);
     } else if (currentWordIndex === NUMBER_OF_TRIALS - 1) {
       setGameStatus(GAME_STATUS.FAIL);
@@ -140,17 +188,20 @@ const WordleContextProvider = ({ children }: { children: ReactNode }) => {
             ? prev.currentWordIndex + 1 // Advance to the next line if the current trial fails.
             : prev.currentWordIndex, // the last trial
       }));
+      setGameStatus(GAME_STATUS.WRONG);
+      resetGameStatusAfterWarning();
     }
   }
 
   function restartGame() {
     setGuessedWords(initialState);
-    setGameStatus(undefined);
+    setGameStatus(GAME_STATUS.RESTART);
   }
 
   return (
     <WordleContext.Provider
       value={{
+        targetWord,
         setTargetWord,
         guessedWords,
         setGuessedWords,

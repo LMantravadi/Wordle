@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import styles from "./LetterTile.module.css";
 import { LetterProps } from "../context/prototypes";
-import { LETTER_STATUS } from "../constants/constants";
+import { LETTER_STATUS } from "../constants/wordle-constants";
 
 interface LetterTileProps {
   letterTile: LetterProps;
@@ -20,7 +20,6 @@ export default function LetterTile({
   ) {
     style += styles.actionButton;
     width = 100;
-    // console.log(style);
   } else
     style +=
       letterTile?.status === LETTER_STATUS.CORRECT
@@ -29,7 +28,7 @@ export default function LetterTile({
         ? styles.wrong
         : letterTile?.status === LETTER_STATUS.MISPLACED
         ? styles.misplaced
-        : styles.active;
+        : styles.initial;
 
   const handleUserInputOnEnter = (
     e: React.KeyboardEvent<HTMLParagraphElement>

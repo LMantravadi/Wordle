@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Line from "./Line";
-import { NUMBER_OF_TRIALS } from "../constants/constants";
+import { NUMBER_OF_TRIALS } from "../constants/wordle-constants";
 
 export default function WordleGrid() {
   const getWordLines = (): ReactNode => {

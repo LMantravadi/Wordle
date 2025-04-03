@@ -29,18 +29,18 @@
     background-color: rgb(59, 58, 58);
   }
 
-  .keyboardStart {
+  .initial {
     border: "solid grey 1px";
     color: black;
     background-color: lightgray;
   }
 
-  .active {
+  /* .active {
     color: black;
     background-color: lightgray;
     border: "solid grey 1px";
   }
-  
+   */
   .wrong {
     color: black;
     background-color: gray;

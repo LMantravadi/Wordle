@@ -1,7 +1,7 @@
 import { useWordleContext } from "../context/AppSlice";
 import LetterTile from "./LetterTile";
 import lineStyle from "./Line.module.css";
-import { LETTER_COUNT_IN_WORD } from "../constants/constants";
+import { LETTER_COUNT_IN_WORD } from "../constants/wordle-constants";
 
 export default function Line({ lineNumber }: { lineNumber: number }) {
   const { guessedWords } = useWordleContext();

@@ -6,7 +6,6 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/", async (request, response) => {
-  console.log("Request received...");
   try {
     const response = await fetch("https://wordle-api.vercel.app/api/wordle", {
       headers: {
@@ -16,7 +15,6 @@ app.post("/", async (request, response) => {
       body: JSON.stringify({ guess: "words" }),
     });
     const data = await response.json();
-    console.log(data);
   } catch (error) {
     console.error("Error checking guess:", error);
   }

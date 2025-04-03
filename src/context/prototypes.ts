@@ -1,7 +1,7 @@
-import { LETTER_STATUS } from "../constants/constants";
+import { LETTER_STATUS } from "../constants/wordle-constants";
 
 export interface LetterProps {
-  letter: string; status: LETTER_STATUS.CORRECT | LETTER_STATUS.MISPLACED | LETTER_STATUS.WRONG
+  letter: string; status: LETTER_STATUS;
 }
 
 export interface WordProps {
